@@ -24,4 +24,9 @@
     <ProjectReference Include="..\Kyutorius.AstonishedVendetta.Foundation\Kyutorius.AstonishedVendetta.Foundation.csproj" />
   </ItemGroup>
 
+  <Target Name="CopyResources" AfterTargets="AfterBuild">
+    <Copy SourceFiles="Resources/0-expected.vtt" DestinationFolder="$(OutDir)/Resources" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Resources/1-input.ass" DestinationFolder="$(OutDir)/Resources" SkipUnchangedFiles="true" />
+  </Target>
+
 </Project>
