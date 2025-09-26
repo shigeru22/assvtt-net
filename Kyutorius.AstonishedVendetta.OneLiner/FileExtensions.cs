@@ -3,10 +3,8 @@
 
 namespace Kyutorius.AstonishedVendetta.OneLiner;
 
-public struct ApplicationContext
+public enum FileExtensions
 {
-    public string InputFile { get; set; }
-    public string OutputFile { get; set; }
-
-    public bool IsVerbose { get; set; }
+    SUBSTATION_ALPHA = 1,
+    SUBRIP
 }

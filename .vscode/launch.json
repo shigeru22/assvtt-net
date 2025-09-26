@@ -3,9 +3,26 @@
   "configurations": [
     {
       "name": "Launch (Kyutorius.AstonishedVendetta.OneLiner)",
-      "type": "dotnet",
+      "type": "coreclr",
       "request": "launch",
-      "projectPath": "${workspaceFolder}/Kyutorius.AstonishedVendetta.OneLiner/Kyutorius.AstonishedVendetta.OneLiner.csproj"
+      "preLaunchTask": "build-all",
+      "program": "${workspaceFolder}/Kyutorius.AstonishedVendetta.OneLiner/bin/Debug/net8.0/Kyutorius.AstonishedVendetta.OneLiner.dll",
+      "args": ["-i", "${input:inputPath}", "-o", "${input:outputPath}"],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "internalConsole"
+    },
+  ],
+  "inputs": [
+    {
+      "id": "inputPath",
+      "type": "promptString",
+      "description": "Input file path"
+    },
+    {
+      "id": "outputPath",
+      "type": "promptString",
+      "description": "Output file path"
     }
   ]
 }
