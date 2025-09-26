@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kyutorius.AstonishedVendett
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kyutorius.AstonishedVendetta.Tests", "Kyutorius.AstonishedVendetta.Tests\Kyutorius.AstonishedVendetta.Tests.csproj", "{FF09D735-C901-4533-9E5C-CECA2D056C75}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kyutorius.AstonishedVendetta.OneLiner", "Kyutorius.AstonishedVendetta.OneLiner\Kyutorius.AstonishedVendetta.OneLiner.csproj", "{FAACC0AB-634C-4CE4-A286-7C20E32F0271}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{FF09D735-C901-4533-9E5C-CECA2D056C75}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF09D735-C901-4533-9E5C-CECA2D056C75}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF09D735-C901-4533-9E5C-CECA2D056C75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FAACC0AB-634C-4CE4-A286-7C20E32F0271}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FAACC0AB-634C-4CE4-A286-7C20E32F0271}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FAACC0AB-634C-4CE4-A286-7C20E32F0271}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FAACC0AB-634C-4CE4-A286-7C20E32F0271}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

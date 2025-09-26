@@ -5,7 +5,7 @@
       "name": "Launch (Kyutorius.AstonishedVendetta.OneLiner)",
       "type": "dotnet",
       "request": "launch",
-      "projectPath": "${workspaceFolder}/Kyutorius.AstonishedVendetta.Console/Kyutorius.AstonishedVendetta.OneLiner.csproj"
+      "projectPath": "${workspaceFolder}/Kyutorius.AstonishedVendetta.OneLiner/Kyutorius.AstonishedVendetta.OneLiner.csproj"
     }
   ]
 }
