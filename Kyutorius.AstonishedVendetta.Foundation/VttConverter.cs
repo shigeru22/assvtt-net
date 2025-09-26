@@ -437,7 +437,23 @@ public static class VttConverter
                 continue;
             }
 
-            // else should be the subtitle, append and stream to output
+            // else should be the subtitle, check for next lines (if any),
+            // then append and stream to output
+
+            sbOutputLine.Append(currentLine);
+
+            while (!input.EndOfStream)
+            {
+                string? nextLine = await input.ReadLineAsync();
+                if (string.IsNullOrWhiteSpace(nextLine))
+                {
+                    break;
+                }
+                sbOutputLine.Append($"\r\n{nextLine}");
+            }
+
+            string outputLine = sbOutputLine.ToString();
+            sbOutputLine.Clear();
 
             if (!hasHeaderPrinted)
             {
@@ -446,11 +462,6 @@ public static class VttConverter
 
                 hasHeaderPrinted = true;
             }
-
-            sbOutputLine.Append(currentLine);
-
-            string outputLine = sbOutputLine.ToString();
-            sbOutputLine.Clear();
 
             await output.WriteAsync($"{outputLine}\r\n");
             if (!input.EndOfStream)
