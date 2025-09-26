@@ -25,8 +25,10 @@
   </ItemGroup>
 
   <Target Name="CopyResources" AfterTargets="AfterBuild">
-    <Copy SourceFiles="Resources/0-expected.vtt" DestinationFolder="$(OutDir)/Resources" SkipUnchangedFiles="true" />
-    <Copy SourceFiles="Resources/1-input.ass" DestinationFolder="$(OutDir)/Resources" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Resources/1-ass/0-expected.vtt" DestinationFolder="$(OutDir)/Resources/1-ass" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Resources/1-ass/1-input.ass" DestinationFolder="$(OutDir)/Resources/1-ass" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Resources/2-srt/0-expected.vtt" DestinationFolder="$(OutDir)/Resources/2-srt" SkipUnchangedFiles="true" />
+    <Copy SourceFiles="Resources/2-srt/1-input.srt" DestinationFolder="$(OutDir)/Resources/2-srt" SkipUnchangedFiles="true" />
   </Target>
 
 </Project>

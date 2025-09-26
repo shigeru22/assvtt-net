@@ -40,8 +40,12 @@ public class VttConverterTests
     private const string FILE_TEST_INPUT_FILE_NAME = "1-input.ass";
     private const string FILE_TEST_OUTPUT_FILE_NAME = "2-output.vtt";
 
+    private const string FILE_TEST_SRT_EXPECTED_FILE_NAME = "0-expected.vtt";
+    private const string FILE_TEST_SRT_INPUT_FILE_NAME = "1-input.srt";
+    private const string FILE_TEST_SRT_OUTPUT_FILE_NAME = "2-output.vtt";
 
-    [Fact(DisplayName = "Single line tests (simple)")]
+
+    [Fact(DisplayName = "Single ASS line tests (simple)")]
     public void SingleLineTests()
     {
         string? result1 = VttConverter.ConvertAssLine(SINGLE_LINE_TEST_1);
@@ -52,14 +56,14 @@ public class VttConverterTests
         Assert.Equal(SINGLE_LINE_RESULT_3, result3);
     }
 
-    [Fact(DisplayName = "Single line test (with override styles)")]
+    [Fact(DisplayName = "Single ASS line test (with override styles)")]
     public void SingleLineTestWithOverrideStyles()
     {
         string? result1 = VttConverter.ConvertAssLine(SINGLE_LINE_STYLED_TEST_1);
         Assert.Equal(SINGLE_LINE_STYLED_RESULT_1, result1);
     }
 
-    [Fact(DisplayName = "Multiple line tests")]
+    [Fact(DisplayName = "Multiple ASS line tests")]
     public async Task MultipleLineTests()
     {
         string? result1 = await VttConverter.ConvertAssStringAsync(MULTIPLE_LINE_TEST_1, Encoding.UTF8);
@@ -70,11 +74,11 @@ public class VttConverterTests
         Assert.Equal(MULTIPLE_LINE_RESULT_2, result2);
     }
 
-    [Fact(DisplayName = "File processing tests")]
+    [Fact(DisplayName = "ASS file processing tests")]
     public async Task FileProcessingTests()
     {
         char pathSeparator = Path.DirectorySeparatorChar;
-        string resourcesDirectory = $"{Directory.GetCurrentDirectory()}{pathSeparator}Resources";
+        string resourcesDirectory = $"{Directory.GetCurrentDirectory()}{pathSeparator}Resources{pathSeparator}1-ass";
 
         string expectedFilePath = $"{resourcesDirectory}{pathSeparator}{FILE_TEST_EXPECTED_FILE_NAME}";
         string inputFilePath = $"{resourcesDirectory}{pathSeparator}{FILE_TEST_INPUT_FILE_NAME}";
@@ -86,6 +90,38 @@ public class VttConverterTests
             FileAccess.Write);
 
         await VttConverter.ConvertAssStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
+
+        fsInput.Close();
+        fsOutput.Close();
+
+        FileStream fsExpected = new FileStream(expectedFilePath, FileMode.Open);
+        fsOutput = new FileStream(outputFilePath, FileMode.Open);
+
+        string expected = await new StreamReader(fsExpected).ReadToEndAsync();
+        string result = await new StreamReader(fsOutput).ReadToEndAsync();
+
+        fsExpected.Close();
+        fsOutput.Close();
+
+        Assert.Equal(expected, result);
+    }
+
+    [Fact(DisplayName = "SRT file processing tests")]
+    public async Task FileSrtProcessingTests()
+    {
+        char pathSeparator = Path.DirectorySeparatorChar;
+        string resourcesDirectory = $"{Directory.GetCurrentDirectory()}{pathSeparator}Resources{pathSeparator}2-srt";
+
+        string expectedFilePath = $"{resourcesDirectory}{pathSeparator}{FILE_TEST_SRT_EXPECTED_FILE_NAME}";
+        string inputFilePath = $"{resourcesDirectory}{pathSeparator}{FILE_TEST_SRT_INPUT_FILE_NAME}";
+        string outputFilePath = $"{resourcesDirectory}{pathSeparator}{FILE_TEST_SRT_OUTPUT_FILE_NAME}";
+
+        FileStream fsInput = new FileStream(inputFilePath, FileMode.Open);
+        FileStream fsOutput = new FileStream(outputFilePath,
+            FileMode.Create,
+            FileAccess.Write);
+
+        await VttConverter.ConvertSrtStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
 
         fsInput.Close();
         fsOutput.Close();

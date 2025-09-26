@@ -45,6 +45,9 @@ public static class VttConverter
     private static readonly Regex REGEX_STYLING_TAG = new Regex(@"[a-zA-Z]+", RegexOptions.Compiled);
     private static readonly Regex REGEX_B_TAG = new Regex(@"b(\d{3})", RegexOptions.Compiled);
 
+    private static readonly Regex REGEX_SRT_LINE_NUMBER = new Regex(@"^\d+$", RegexOptions.Compiled);
+    private static readonly Regex REGEX_SRT_TIMEFRAME = new Regex(@"(\d\d:\d\d:\d\d(?:[,.]\d\d\d)?) --> (\d\d:\d\d:\d\d(?:[,.]\d\d\d)?)", RegexOptions.Compiled);
+
     private static readonly string[] TEXT_DECORATION_TAGS = ["b", "i", "u", "s"];
 
     /// <summary>
@@ -394,6 +397,70 @@ public static class VttConverter
 
                 currentVttLine++;
             }
+        }
+    }
+
+    /// <summary>
+    /// Converts SRT input stream to VTT through the output stream.
+    /// </summary>
+    /// <param name="input">Input SRT stream.</param>
+    /// <param name="output">Output stream.</param>
+    /// <param name="callback">
+    /// Callback to be invoked on each line processed.
+    /// </param>
+    /// <returns>Awaitable task for processing.</returns>
+    public static async Task ConvertSrtStreamAsync(StreamReader input, StreamWriter output, OnLineOutputCallback? callback = null)
+    {
+        bool hasHeaderPrinted = false;
+
+        StringBuilder sbOutputLine = new StringBuilder();
+
+        while (!input.EndOfStream)
+        {
+            string? currentLine = await input.ReadLineAsync();
+
+            if (string.IsNullOrWhiteSpace(currentLine))
+            {
+                continue;
+            }
+
+            if (REGEX_SRT_LINE_NUMBER.IsMatch(currentLine))
+            {
+                sbOutputLine.Append($"{currentLine}\r\n");
+                continue;
+            }
+
+            if (REGEX_SRT_TIMEFRAME.IsMatch(currentLine))
+            {
+                string srtTimeframe = currentLine.Replace(".", ",");
+                sbOutputLine.Append($"{srtTimeframe}\r\n");
+                continue;
+            }
+
+            // else should be the subtitle, append and stream to output
+
+            if (!hasHeaderPrinted)
+            {
+                await output.WriteAsync("WEBVTT\r\n\r\n");
+                await output.FlushAsync();
+
+                hasHeaderPrinted = true;
+            }
+
+            sbOutputLine.Append(currentLine);
+
+            string outputLine = sbOutputLine.ToString();
+            sbOutputLine.Clear();
+
+            await output.WriteAsync($"{outputLine}\r\n");
+            if (!input.EndOfStream)
+            {
+                await output.WriteAsync("\r\n");
+            }
+
+            await output.FlushAsync();
+
+            callback?.Invoke(outputLine);
         }
     }
 
