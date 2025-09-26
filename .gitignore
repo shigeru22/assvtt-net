@@ -401,4 +401,5 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
-Kyutorius.AstonishedVendetta.Tests/Resources/2-output.vtt
+Kyutorius.AstonishedVendetta.Tests/Resources/1-ass/2-output.vtt
+Kyutorius.AstonishedVendetta.Tests/Resources/2-srt/2-output.vtt
