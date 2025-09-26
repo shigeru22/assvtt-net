@@ -27,7 +27,7 @@ public class Program
 
         // convert
 
-        await VttConverter.ConvertStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
+        await VttConverter.ConvertAssStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
 
         // no errors, return
 

@@ -60,7 +60,7 @@ public static class VttConverter
     /// <param name="disableStyles">Whether to disable styles embedded from the ASS subtitle.</param>
     /// <param name="lineNumber">Line number before timestamp. Set as null to disable.</param>
     /// <returns>Converted line. May be null if error.</returns>
-    public static string? ConvertLine(string? input, bool disableStyles = false, int? lineNumber = null)
+    public static string? ConvertAssLine(string? input, bool disableStyles = false, int? lineNumber = null)
     {
         if (string.IsNullOrWhiteSpace(input))
         {
@@ -362,7 +362,7 @@ public static class VttConverter
     /// Callback to be invoked on each line processed.
     /// </param>
     /// <returns>Awaitable task for processing.</returns>
-    public static async Task ConvertStreamAsync(StreamReader input, StreamWriter output, OnLineOutputCallback? callback = null)
+    public static async Task ConvertAssStreamAsync(StreamReader input, StreamWriter output, OnLineOutputCallback? callback = null)
     {
         bool hasHeaderPrinted = false;
         int currentVttLine = 1;
@@ -370,7 +370,7 @@ public static class VttConverter
         while (!input.EndOfStream)
         {
             string? currentLine = await input.ReadLineAsync();
-            string? convertedLine = ConvertLine(currentLine);
+            string? convertedLine = ConvertAssLine(currentLine);
 
             if (!string.IsNullOrWhiteSpace(convertedLine))
             {
@@ -411,7 +411,7 @@ public static class VttConverter
     /// <returns>
     /// Awaitable task for processing, returning converted string.
     /// </returns>
-    public static async Task<string> ConvertStringAsync(string input, Encoding encoding, bool printHeader = false, OnLineOutputCallback? callback = null)
+    public static async Task<string> ConvertAssStringAsync(string input, Encoding encoding, bool printHeader = false, OnLineOutputCallback? callback = null)
     {
         bool hasHeaderPrinted = false;
         int currentVttLine = 1;
@@ -424,7 +424,7 @@ public static class VttConverter
         while (!inputStreamReader.EndOfStream)
         {
             string? currentLine = await inputStreamReader.ReadLineAsync();
-            string? convertedLine = ConvertLine(currentLine);
+            string? convertedLine = ConvertAssLine(currentLine);
 
             if (!string.IsNullOrWhiteSpace(convertedLine))
             {

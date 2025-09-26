@@ -44,27 +44,27 @@ public class VttConverterTests
     [Fact(DisplayName = "Single line tests (simple)")]
     public void SingleLineTests()
     {
-        string? result1 = VttConverter.ConvertLine(SINGLE_LINE_TEST_1);
+        string? result1 = VttConverter.ConvertAssLine(SINGLE_LINE_TEST_1);
         Assert.Equal(SINGLE_LINE_RESULT_1, result1);
-        string? result2 = VttConverter.ConvertLine(SINGLE_LINE_TEST_2);
+        string? result2 = VttConverter.ConvertAssLine(SINGLE_LINE_TEST_2);
         Assert.Equal(SINGLE_LINE_RESULT_2, result2);
-        string? result3 = VttConverter.ConvertLine(SINGLE_LINE_TEST_3);
+        string? result3 = VttConverter.ConvertAssLine(SINGLE_LINE_TEST_3);
         Assert.Equal(SINGLE_LINE_RESULT_3, result3);
     }
 
     [Fact(DisplayName = "Single line test (with override styles)")]
     public void SingleLineTestWithOverrideStyles()
     {
-        string? result1 = VttConverter.ConvertLine(SINGLE_LINE_STYLED_TEST_1);
+        string? result1 = VttConverter.ConvertAssLine(SINGLE_LINE_STYLED_TEST_1);
         Assert.Equal(SINGLE_LINE_STYLED_RESULT_1, result1);
     }
 
     [Fact(DisplayName = "Multiple line tests")]
     public async Task MultipleLineTests()
     {
-        string? result1 = await VttConverter.ConvertStringAsync(MULTIPLE_LINE_TEST_1, Encoding.UTF8);
+        string? result1 = await VttConverter.ConvertAssStringAsync(MULTIPLE_LINE_TEST_1, Encoding.UTF8);
         Assert.Equal(MULTIPLE_LINE_RESULT_1, result1);
-        string? result2 = await VttConverter.ConvertStringAsync(MULTIPLE_LINE_TEST_2,
+        string? result2 = await VttConverter.ConvertAssStringAsync(MULTIPLE_LINE_TEST_2,
             Encoding.UTF8,
             true);
         Assert.Equal(MULTIPLE_LINE_RESULT_2, result2);
@@ -85,7 +85,7 @@ public class VttConverterTests
             FileMode.Create,
             FileAccess.Write);
 
-        await VttConverter.ConvertStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
+        await VttConverter.ConvertAssStreamAsync(new StreamReader(fsInput), new StreamWriter(fsOutput));
 
         fsInput.Close();
         fsOutput.Close();
